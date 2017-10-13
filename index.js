@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const hbs = require('express-hbs')
 const logger = require('morgan')
 const path = require('path')
+var http = require('http')
 const app = express()
 var porta = process.env.PORT || 8080;
 
@@ -23,9 +24,11 @@ app.engine('hbs', hbs.express4({
 require('./src/routes')(app)
 
 
-app.listen(app.get(porta),()=>{
-    console.log('Serviço iniciado na porta'+porta);
-})
+http
+  .createServer(app)
+  .listen(porta, function(){
+    console.log('Serviço iniciado na porta '+porta);
+  });
 
 module.exports = app
 
